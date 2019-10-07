@@ -1,0 +1,76 @@
+buildscript {
+    ext {
+        springBootVersion = '2.0.4.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: "jacoco"
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+group = 'com.cisco'
+
+repositories {
+    mavenCentral()
+}
+
+processResources {
+    expand(project.properties)
+}
+
+jar {
+    enabled = true
+}
+
+jacoco {
+    toolVersion = "0.8.1"
+}
+
+jacocoTestCoverageVerification {
+    afterEvaluate {
+        classDirectories = files(classDirectories.files.collect {
+            fileTree(dir: it, exclude:  [
+                'com/cisco/auth/web/*'
+            ])
+        })
+    }
+    violationRules {
+        rule {
+            limit {
+                minimum = 0.8
+            }
+        }
+    }
+}
+
+check.dependsOn jacocoTestCoverageVerification
+
+dependencies {
+    compileOnly('org.projectlombok:lombok:1.18.10')
+    annotationProcessor('org.projectlombok:lombok:1.18.10')
+    compile('org.springframework.boot:spring-boot-starter-web')
+    compile('org.springframework.boot:spring-boot-starter-actuator')
+    compile('org.springframework.boot:spring-boot-starter-data-mongodb')
+    compile('org.springframework.boot:spring-boot-starter-security')
+    compile('org.springframework.security:spring-security-jwt:1.0.9.RELEASE')
+    compile('org.springframework.security.oauth:spring-security-oauth2:2.3.3.RELEASE')
+    compile('io.springfox:springfox-swagger2:2.9.2')
+    compile('io.springfox:springfox-swagger-ui:2.9.2')
+    compile('com.google.guava:guava:23.0')
+    compile('com.github.jmnarloch:modelmapper-spring-boot-starter:1.1.0')
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+    testCompile('org.springframework.security:spring-security-test')
+
+    // JAX-B dependencies for JDK 9+
+    implementation "javax.xml.bind:jaxb-api:2.2.11"
+    implementation "com.sun.xml.bind:jaxb-core:2.2.11"
+    implementation "com.sun.xml.bind:jaxb-impl:2.2.11"
+    implementation "javax.activation:activation:1.1.1"
+}

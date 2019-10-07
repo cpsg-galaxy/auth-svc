@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-svc-deployment
+  labels:
+    app: auth-svc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth-svc
+  template:
+    metadata:
+      labels:
+        app: auth-svc
+    spec:
+      containers:
+        - name: auth-svc
+          image: registry.gitlab.com/coordi/auth-svc:{{ .VERSION }}
+          env:
+          - name: SPRING.DATA.MONGODB.URI
+            value: mongodb+srv://{{ .DB_USERNAME }}:{{ .DB_PASSWORD }}@{{ .DB_HOSTS }}/test?ssl\=true&authSource\=admin
+      imagePullSecrets:
+        - name: regcred
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth-svc-service
+  annotations:
+    getambassador.io/config: |
+      ---
+      apiVersion: ambassador/v1
+      kind: Mapping
+      name: auth-svc-service_mapping
+      service: auth-svc-service
+      host: api.getcoordi.com
+      prefix: /auth/
+spec:
+  selector:
+    app: auth-svc
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8080
