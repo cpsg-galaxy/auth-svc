@@ -3,4 +3,7 @@ node('sample') {
     stage('test') {
         sh('make test')
     }
+    stage('build') {
+        sh('make build')
+    }
 }
