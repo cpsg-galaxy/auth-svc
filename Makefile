@@ -10,11 +10,16 @@ help:
 	@echo '  db-start        Start Mongo DB container.'
 	@echo '  db-stop         Stop Mongo DB container.'
 	@echo '  db-remove       Remove/Delete Mongo DB container.'
+	@echo '  push            Building and Pushing Image to Registry'
 	@echo ''
 
 ## build auth-svc
 build:
 	@bash ./scripts/build.sh
+
+## build and push image into registry
+push:
+    @bash ./scripts/push.sh
 
 ## run test and capture code coverage metrics on project
 test: .pretest
