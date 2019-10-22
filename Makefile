@@ -19,7 +19,7 @@ build:
 
 ## build and push image into registry
 push:
-    @bash ./scripts/push.sh
+	@bash ./scripts/push.sh
 
 ## run test and capture code coverage metrics on project
 test: .pretest
