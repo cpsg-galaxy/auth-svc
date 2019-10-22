@@ -4,7 +4,7 @@ node('sample') {
         sh('make test')
     }
     stage('build') {
-        sh('echo $PWD')
+        sh('rm -rf $PWD/build')
         sh('make build')
     }
 }
