@@ -1,4 +1,4 @@
-FROM openjdk11-jdk-alpine
+FROM openjdk:13-alpine
 VOLUME /tmp
 ARG JAR_FILE
 COPY ${JAR_FILE} auth-svc.jar
