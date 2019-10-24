@@ -28,6 +28,8 @@ node('sample') {
 
     // Triggering AO Workflow for Deployment
     stage('deploy') {
+        DEPLOYMENT_WORKFLOW_PARAMS = ""
+
         ao_wf = new ao_workflows()
         wf_id=ao_wf.run(DEPLOYMENT_WORKFLOW_NAME, DEPLOYMENT_WORKFLOW_PARAMS, CCS_URL, CCS_CREDENTIALS)
     }
