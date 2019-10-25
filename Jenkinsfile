@@ -30,7 +30,6 @@ node('sample') {
     stage('deploy') {
         DEPLOYMENT_WORKFLOW_PARAMS="""
             {
-              "GitCommit": "${GIT_COMMIT}"
             }
         """
         ao_wf = new ao_workflows()
