@@ -4,7 +4,7 @@ import com.cisco.jenkins.ccs.ao_workflows
 
 // Configuration used to access CCS and call Work Flows
 CCS_URL="https://na.cloudcenter.cisco.com"
-CCS_CREDENTIALS="1245696:02c1629d-bec8-4673-8256-626be7934a29"
+CCS_CREDENTIALS="ccs_cred"
 DEPLOYMENT_WORKFLOW_NAME="CI_CD"
 
 node('sample') {
