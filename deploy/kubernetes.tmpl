@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: auth-svc
-          image: registry.gitlab.com/coordi/auth-svc:{{ .VERSION }}
+          image: .DOCKER_REGISTRY/auth-svc:{{ .VERSION }}
           env:
           - name: SPRING.DATA.MONGODB.URI
             value: mongodb+srv://{{ .DB_USERNAME }}:{{ .DB_PASSWORD }}@{{ .DB_HOSTS }}/test?ssl\=true&authSource\=admin
