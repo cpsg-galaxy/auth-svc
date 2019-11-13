@@ -30,7 +30,7 @@ node('sample') {
     stage('deploy') {
         DEPLOYMENT_WORKFLOW_PARAMS="""
             {
-
+              "version": "${BUILD_ID}"
             }
         """
         ao_wf = new ao_workflows()
