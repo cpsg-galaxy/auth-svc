@@ -33,7 +33,25 @@ node('sample') {
               "version": "${BUILD_ID}"
             }
         """
-        ao_wf = new ao_workflows()
-        wf_id=ao_wf.run(DEPLOYMENT_WORKFLOW_NAME, DEPLOYMENT_WORKFLOW_PARAMS, CCS_URL, CCS_CREDENTIALS)
+        try {
+            ao_wf = new ao_workflows()
+            wf_id=ao_wf.run(DEPLOYMENT_WORKFLOW_NAME, DEPLOYMENT_WORKFLOW_PARAMS, CCS_URL, CCS_CREDENTIALS)
+
+            timeout = 70
+            wf_status = ''
+            while ((!(wf_status in ['success','failed','canceled'])) && (timeout > 0)) {
+                sleep 10
+                timeout--
+                wf_status = ao_wf.status(wf_id, CCS_URL, CCS_CREDENTIALS)
+                println('Current status: ' + wf_status)
+            }
+
+            if ((timeout == 0) || (wf_status != 'success')) {
+                error('Workflow '+ DEPLOYMENT_WORKFLOW_NAME + ' did not complete successfully')
+            }
+        } catch(Exception ex) {
+            updateGitlabCommitStatus name: STAGE_TITLE, state: 'failed'
+            error("Deployment failed")
+        }
     }
 }
