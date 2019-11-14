@@ -50,7 +50,6 @@ node('sample') {
                 error('Workflow '+ DEPLOYMENT_WORKFLOW_NAME + ' did not complete successfully')
             }
         } catch(Exception ex) {
-            updateGitlabCommitStatus name: STAGE_TITLE, state: 'failed'
             error("Deployment failed")
         }
     }
