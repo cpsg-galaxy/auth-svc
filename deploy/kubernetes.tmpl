@@ -19,7 +19,7 @@ spec:
           image: {{ .DOCKER_REGISTRY }}/auth-svc:{{ .VERSION }}
           env:
           - name: SPRING.DATA.MONGODB.URI
-            value: mongodb+srv://{{ .DB_USERNAME }}:{{ .DB_PASSWORD }}@{{ .DB_HOSTS }}/test?retryWrites=true&w=majority
+            value: mongodb://{{ .DB_USERNAME }}:{{ .DB_PASSWORD }}@{{ .DB_HOSTS }}/test?retryWrites=true&w=majority
       imagePullSecrets:
         - name: regcred
 ---
