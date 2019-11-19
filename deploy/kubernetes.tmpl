@@ -20,6 +20,8 @@ spec:
           env:
           - name: SPRING.DATA.MONGODB.URI
             value: mongodb+srv://{{ .DB_USERNAME }}:{{ .DB_PASSWORD }}@{{ .DB_HOSTS }}/test?retryWrites=true&w=majority
+          ports:
+          - containerPort: 8080
       imagePullSecrets:
         - name: regcred
 ---
