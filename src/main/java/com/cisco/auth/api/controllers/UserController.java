@@ -49,20 +49,20 @@ public class UserController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @PostMapping
-    @ApiOperation("Create User")
-    public ResponseEntity<Void> createUser(@RequestBody UserRequest userRequest, UriComponentsBuilder builder)
-            throws ServiceException {
-
-        LOGGER.info(String.format("create user: %s", userRequest.getUsername()));
-        User user = mapper.map(userRequest, User.class);
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(builder.path("/v1/users/{id}").
-                buildAndExpand(userService.createUser(user)).toUri());
-
-        return new ResponseEntity<>(headers, HttpStatus.CREATED);
-    }
+//    @PostMapping
+//    @ApiOperation("Create User")
+//    public ResponseEntity<Void> createUser(@RequestBody UserRequest userRequest, UriComponentsBuilder builder)
+//            throws ServiceException {
+//
+//        LOGGER.info(String.format("create user: %s", userRequest.getUsername()));
+//        User user = mapper.map(userRequest, User.class);
+//
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.setLocation(builder.path("/v1/users/{id}").
+//                buildAndExpand(userService.createUser(user)).toUri());
+//
+//        return new ResponseEntity<>(headers, HttpStatus.CREATED);
+//    }
 
     @GetMapping("/{id}")
     public ResponseEntity<UserResponse> getUser(@PathVariable("id") String userId) {
